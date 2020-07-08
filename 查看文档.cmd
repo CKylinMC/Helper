@@ -1,0 +1,1 @@
+@start "Openning document in browser..." /MAX explorer.exe docs\index.html

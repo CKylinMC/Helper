@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Helper:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Helper_jar</output-path>
+    <root id="archive" name="Helper.jar">
+      <element id="module-output" name="Helper" />
+    </root>
+  </artifact>
+</component>
