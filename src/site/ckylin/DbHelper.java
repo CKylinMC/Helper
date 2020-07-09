@@ -198,6 +198,18 @@ public class DbHelper {
     }
 
     /**
+     * 生成查询 “计数” <code>SELECT COUNT(*) FROM [table] </code>
+     *
+     * @param tableName 数据表名
+     * @return 查询语句
+     */
+    public static String getCountCmd(String tableName) {
+        String baseCmd = "SELECT COUNT(*) FROM <TBNAME> ";
+        String cmd = baseCmd.replace("<TBNAME>", tableName);
+        return cmd;
+    }
+
+    /**
      * 生成 "WHERE" 限定语句。此方法用于拼接。
      *
      * @param limits 所有限定
