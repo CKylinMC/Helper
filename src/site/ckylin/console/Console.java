@@ -10,11 +10,19 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The type Console.
+ */
 public class Console {
 
     private static Console instance;
     private static Console lastInstance;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static Console getInstance() {
         if (Console.instance == null) {
             if (Console.lastInstance != null) {
@@ -26,6 +34,11 @@ public class Console {
         return instance;
     }
 
+    /**
+     * Gets last instance.
+     *
+     * @return the last instance
+     */
     public static Console getLastInstance() {
         if (Console.lastInstance == null) {
             new Console();
@@ -33,6 +46,9 @@ public class Console {
         return lastInstance;
     }
 
+    /**
+     * Instantiates a new Console.
+     */
     public Console() {
         Console.lastInstance = this;
     }
@@ -42,28 +58,63 @@ public class Console {
 
     private PrintStream out = System.out;
 
+    /**
+     * The Debug on.
+     */
     public boolean debugOn = false;
+    /**
+     * The constant globalDebugOn.
+     */
     public static boolean globalDebugOn = true;
 
+    /**
+     * The Mute.
+     */
     public boolean mute = false;
+    /**
+     * The constant globalMute.
+     */
     public static boolean globalMute = false;
 
+    /**
+     * Sets out.
+     *
+     * @param out the out
+     */
     public void setOut(PrintStream out) {
         this.out = out;
     }
 
+    /**
+     * Gets out.
+     *
+     * @return the out
+     */
     public PrintStream getOut() {
         return out;
     }
 
+    /**
+     * Reset out.
+     */
     public void resetOut() {
         setOut(System.out);
     }
 
+    /**
+     * Is logging boolean.
+     *
+     * @return the boolean
+     */
     public boolean isLogging() {
         return logs == null;
     }
 
+    /**
+     * Sets logging.
+     *
+     * @param on the on
+     */
     public void setLogging(boolean on) {
         if (on) {
             logs = new ArrayList<>();
@@ -72,6 +123,11 @@ public class Console {
         }
     }
 
+    /**
+     * Gets logs.
+     *
+     * @return the logs
+     */
     public ArrayList<String> getLogs() {
         if (isLogging()) {
             if (!Objects.equals(lastLine, "")) {
@@ -124,6 +180,11 @@ public class Console {
         printlnProxy(s);
     }
 
+    /**
+     * Log.
+     *
+     * @param args the args
+     */
     public void log(Object... args) {
         for (Object arg : args) {
             printProxy(arg.toString());
@@ -131,20 +192,42 @@ public class Console {
         printlnProxy("");
     }
 
+    /**
+     * Warn.
+     *
+     * @param args the args
+     */
     public void warn(Object... args) {
         printProxy("[WARNING] ");
         log(args);
     }
 
+    /**
+     * Error.
+     *
+     * @param args the args
+     */
     public void error(Object... args) {
         printProxy("[ERROR] ");
         log(args);
     }
 
+    /**
+     * Debug.
+     *
+     * @param obj  the obj
+     * @param args the args
+     */
     public void debug(Object obj, Object... args) {
         debug(obj.getClass().getSimpleName(), args);
     }
 
+    /**
+     * Debug.
+     *
+     * @param sender the sender
+     * @param args   the args
+     */
     public void debug(String sender, Object... args) {
         printDebugProxy("[" + sender + "] ");
         for (Object arg : args) {
