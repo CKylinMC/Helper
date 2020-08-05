@@ -4,6 +4,7 @@
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
     <option name="OTHER_OPTIONS" value="-encoding UTF-8 -charset UTF-8 -windowtitle &quot;Helper工具类&quot; -doctitle &quot;&lt;h1&gt;Helper工具类&lt;/h1&gt;&quot; -use -author" />
     <option name="LOCALE" value="zh_CN" />
+    <option name="OPEN_IN_BROWSER" value="false" />
     <option name="OPTION_LINK_TO_JDK_DOCS" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="&lt; JavaSE-1.7 &gt;" project-jdk-type="JavaSDK">

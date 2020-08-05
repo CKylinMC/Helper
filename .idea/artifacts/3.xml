@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="构建源码包">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="root">
+      <element id="archive" name="Helper-sources.jar">
+        <element id="module-source" name="Helper" />
+      </element>
+    </root>
+  </artifact>
+</component>

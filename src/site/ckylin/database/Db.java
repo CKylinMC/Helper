@@ -4,7 +4,9 @@
  * @description:
  * @date: 2020-07-07 9:31
  */
-package site.ckylin;
+package site.ckylin.database;
+
+import site.ckylin.Helper;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
@@ -20,6 +22,16 @@ public class Db {
     private String lastSql;
     private int execCount = 0;
 
+    private static Db instance;
+
+    public static Db getLastInstance() {
+        if (Db.instance == null) {
+            Db.instance = new Db(DbHelper.getLastConnection());
+        }
+        return instance;
+    }
+
+
     /**
      * 使用已有连接初始化代理类
      *
@@ -27,6 +39,7 @@ public class Db {
      */
     public Db(Connection conn) {
         this.conn = conn;
+        Db.instance = this;
     }
 
     /**
@@ -38,6 +51,7 @@ public class Db {
      */
     public Db(String username, String password, String database) {
         this.conn = DbHelper.initConnection(username, password, database);
+        Db.instance = this;
     }
 
     /**
@@ -50,6 +64,7 @@ public class Db {
      */
     public Db(String username, String password, String database, String hostname) {
         this.conn = DbHelper.initConnection(username, password, database, hostname);
+        Db.instance = this;
     }
 
     /**
@@ -424,6 +439,46 @@ public class Db {
     }
 
     /**
+     * 全表计数
+     *
+     * @param tableName 数据表名
+     * @return 行数
+     */
+    public int count(String tableName) {
+        return count(tableName, "*");
+    }
+
+    /**
+     * 指定列序号，计数
+     *
+     * @param tableName   数据表名
+     * @param columnIndex 列编号
+     * @return 行数
+     */
+    public int count(String tableName, int columnIndex) {
+        return count(tableName, "" + columnIndex);
+    }
+
+    /**
+     * 指定列计数
+     *
+     * @param tableName  数据表名
+     * @param columnName 列名或编号
+     * @return 行数
+     */
+    public int count(String tableName, String columnName) {
+        try {
+            ResultSet rs = SELECT("COUNT(" + columnName + ")", tableName, "");
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
      * 关闭数据库连接
      */
     public void close() {
@@ -462,5 +517,9 @@ public class Db {
      */
     public int getExecCount() {
         return execCount;
+    }
+
+    protected void finalize() {
+        close();
     }
 }

@@ -4,20 +4,25 @@
  * @description:
  * @date: 2020-07-07 9:16
  */
-package site.ckylin;
+package site.ckylin.database;
+
+import site.ckylin.Helper;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 /**
  * 数据库工具类 for MySQL
  */
 public class DbHelper {
+
+    /**
+     * 记录最后一次的连接
+     */
+    private static Connection lastDBConnection = null;
+
     /**
      * 加载 MySQL 驱动
      *
@@ -84,7 +89,8 @@ public class DbHelper {
     public static Connection initConnection(String username, String password, String databaseName, String hostname, int port) {
         loadDriver();
         try {
-            return DriverManager.getConnection(buildJDBCUrl("mysql", hostname, port, databaseName), username, password);
+            lastDBConnection = DriverManager.getConnection(buildJDBCUrl("mysql", hostname, port, databaseName), username, password);
+            return lastDBConnection;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,6 +153,35 @@ public class DbHelper {
      */
     public static String getInsertCmd(String tableName, String... columns) {
         String baseCmd = "INSERT INTO <TBNAME> <COLS> VALUES (<VALS>) ";
+        String cmd = baseCmd.replace("<TBNAME>", tableName);
+        StringBuilder cols = new StringBuilder();
+        for (int i = 0; i < columns.length; i++) {
+            String delimiter = i == columns.length - 1 ? "" : ",";
+            cols.append(columns[i]).append(delimiter);
+        }
+        if (cols.length() > 0)
+            cmd = cmd.replace("<COLS>", "(" + cols + ")");
+        else
+            cmd = cmd.replace("<COLS>", "");
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < columns.length; i++) {
+            String queryPlaceHolder = i == columns.length - 1 ? "?" : "?,";
+            placeholders.append(queryPlaceHolder);
+        }
+        cmd = cmd.replace("<VALS>", placeholders.toString());
+        return cmd;
+    }
+
+    /**
+     * 生成占位符查询 “插入” <code>INSERT IGNORE INTO [table] ([columns]) VALUES (?,?...)</code>
+     * <code>IGNORE</code>会无视错误。
+     *
+     * @param tableName 数据表名
+     * @param columns   欲插入的列
+     * @return 包含占位符的语句
+     */
+    public static String getInsertIgnoredCmd(String tableName, String... columns) {
+        String baseCmd = "INSERT IGNORE INTO <TBNAME> <COLS> VALUES (<VALS>) ";
         String cmd = baseCmd.replace("<TBNAME>", tableName);
         StringBuilder cols = new StringBuilder();
         for (int i = 0; i < columns.length; i++) {
@@ -257,7 +292,74 @@ public class DbHelper {
     public static Db connectFromProperties(String path) {
         Properties properties = Helper.loadProperties(path);
         if (properties == null) return null;
-        return new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        lastDBConnection = db.getConnection();
+        return db;
+    }
+
+    /**
+     * 从配置文件读取信息，并初始化数据连接，然后返回数据库代理类。
+     * 配置文件需要包含以下字段：
+     * <ul>
+     *     <li><code>user</code>   => 用户名</li>
+     *     <li><code>pass</code>   => 密码</li>
+     *     <li><code>dbname</code> => 数据库名</li>
+     *     <li><code>host</code>   => 主机地址</li>
+     *     <li><code>port</code>   => 端口号</li>
+     * </ul>
+     *
+     * @param path   配置文件路径
+     * @param loader 对应类的ClassLoader <br> <b>示范：</b><br>Static: <code> ClassName.class.getClassLoader() </code><br>Instance: <code> this.getClass() </code>
+     * @return 数据库代理类
+     */
+    public static Db connectFromPropertiesInResource(String path, ClassLoader loader) {
+        Properties properties = Helper.loadPropertiesAsClassResource(path, loader);
+//        if (properties == null) return null;
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        lastDBConnection = db.getConnection();
+        return db;
+    }
+
+    /**
+     * 从配置文件读取信息，并初始化数据连接，然后返回数据库代理类。
+     * 配置文件需要包含以下字段：
+     * <ul>
+     *     <li><code>user</code>   => 用户名</li>
+     *     <li><code>pass</code>   => 密码</li>
+     *     <li><code>dbname</code> => 数据库名</li>
+     *     <li><code>host</code>   => 主机地址</li>
+     *     <li><code>port</code>   => 端口号</li>
+     * </ul>
+     *
+     * @param path  配置文件路径
+     * @param clazz 对应类的ClassLoader <br> <b>示范：</b><br>Static: <code> ClassName.class.getClassLoader() </code><br>Instance: <code> this.getClass() </code>
+     * @return 数据库代理类
+     */
+    public static Db connectFromPropertiesInResource(String path, Class<?> clazz) {
+        Properties properties = Helper.loadPropertiesAsClassResource(path, clazz);
+//        if (properties == null) return null;
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        lastDBConnection = db.getConnection();
+        return db;
+    }
+
+    /**
+     * 获取最后一次的数据库连接
+     *
+     * @return Connection
+     */
+    public static Connection getLastConnection() {
+        return lastDBConnection;
+    }
+
+    /**
+     * 转换Java Date类到SQL Date类
+     *
+     * @param date java.util.Date
+     * @return java.sql.Date
+     */
+    public static Date toSQLDate(java.util.Date date) {
+        return new Date(date.getTime());
     }
 }
 
