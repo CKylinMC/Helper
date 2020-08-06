@@ -798,12 +798,26 @@ public class Helper {
      * @param format  the format
      * @return the date
      */
-    public static Date parseDate(String dateStr, String format) {
+    public static Date parseDate (String dateStr, String format) {
         try {
             return new SimpleDateFormat(format).parse(dateStr);
         } catch (ParseException e) {
             return null;
         }
     }
+
+    /**
+     * 返回指定值，若指定值为空则返回另一个值
+     *
+     * @param <T>      the type parameter
+     * @param obj      the obj
+     * @param fallback the fallback
+     * @return the t
+     */
+    public static <T> T getOrDefault (T obj, T fallback) {
+        if (obj == null) return fallback;
+        return obj;
+    }
+
 }
 
