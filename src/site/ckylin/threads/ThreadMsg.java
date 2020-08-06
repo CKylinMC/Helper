@@ -1,5 +1,5 @@
 /**
- * @Package: site.ckylin.soso.threadHelper
+ * @Package: site.ckylin.threads
  * @author: CKylinMC
  * @description:
  * @date: 2020-06-26 14:39
