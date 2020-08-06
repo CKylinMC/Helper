@@ -798,7 +798,7 @@ public class Helper {
      * @param format  the format
      * @return the date
      */
-    public static Date parseDate (String dateStr, String format) {
+    public static Date parseDate(String dateStr, String format) {
         try {
             return new SimpleDateFormat(format).parse(dateStr);
         } catch (ParseException e) {
@@ -814,9 +814,40 @@ public class Helper {
      * @param fallback the fallback
      * @return the t
      */
-    public static <T> T getOrDefault (T obj, T fallback) {
+    public static <T> T getOrDefault(T obj, T fallback) {
         if (obj == null) return fallback;
         return obj;
+    }
+
+    /**
+     * 检查字符串是否为数字
+     * <a href="https://www.cnblogs.com/gaoyoubo/archive/2010/09/15/1965080.html">参考自 "Java实现isNaN - Ｍe疯子_(~ 的博客"</a>
+     *
+     * @param value the value
+     * @return the boolean
+     */
+    public static boolean isNaN(String value) {
+        boolean flag = false;
+        if (value != null && !"".equals(value.trim())) {
+            //如果没有小数点
+            if (!value.contains(".")) {
+                if (!value.matches("\\d+")) {
+                    //不是数字
+                    flag = true;
+                }
+            } else if (value.indexOf(".") == 1) {
+                String[] s_arr = value.split("\\.");
+                String s1 = s_arr[0];
+                String s2 = s_arr[1];
+                if ((!s1.matches("\\d+")) || (!s2.matches("\\d+"))) {
+                    //不是数字
+                    flag = true;
+                }
+            }
+        } else {
+            flag = true;
+        }
+        return flag;
     }
 
 }
