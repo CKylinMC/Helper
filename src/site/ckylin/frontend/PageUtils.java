@@ -84,7 +84,7 @@ public class PageUtils {
      * @return the int
      */
     public int getPageStartIndex(int page) {
-        return (page) * itemsPerPage + 1;
+        return (page - 1) * itemsPerPage + 1;
     }
 
     /**
