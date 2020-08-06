@@ -10,15 +10,36 @@ import site.ckylin.Helper;
 
 import java.util.regex.Pattern;
 
+/**
+ * The type Validator.
+ */
 public class Validator {
+    /**
+     * Check mobile phone boolean.
+     *
+     * @param phone the phone
+     * @return the boolean
+     */
     public static boolean checkMobilePhone(String phone) {
         return Pattern.matches("^1[0-9]{10}$", phone);
     }
 
+    /**
+     * Check email boolean.
+     *
+     * @param email the email
+     * @return the boolean
+     */
     public static boolean checkEmail(String email) {
         return Pattern.matches("[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+", email);
     }
 
+    /**
+     * Password rater int.
+     *
+     * @param pass the pass
+     * @return the int
+     */
     public static int passwordRater(String pass) {
         if (pass.length() < 6) return -1;
         if (Helper.isNaN(pass)) return -1;
