@@ -267,12 +267,12 @@ public class DbHelper {
     /**
      * 生成 "LIMIT" 限定语句。此方法用于拼接。
      *
-     * @param from 从第几个结果开始
-     * @param to   一共查询几个结果
+     * @param from  从第几个结果开始
+     * @param count 一共查询几个结果
      * @return 查询语句
      */
-    public static String limit(int from, int to) {
-        return " LIMIT " + from + "," + to;
+    public static String limit(int from, int count) {
+        return " LIMIT " + from + "," + count;
     }
 
     /**

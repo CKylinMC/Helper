@@ -157,8 +157,8 @@ public class SQLStatement {
      * @param to   the to
      * @return the sql statement
      */
-    public SQLStatement limit (int from, int to) {
-        builtStatement += DbHelper.limit(from, to);
+    public SQLStatement limit(int from, int count) {
+        builtStatement += DbHelper.limit(from, count);
         return this;
     }
 
