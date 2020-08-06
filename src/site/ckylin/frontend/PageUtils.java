@@ -60,6 +60,24 @@ public class PageUtils {
     }
 
     /**
+     * 获取当前页起始条目
+     *
+     * @return the int
+     */
+    public int getStartIndex() {
+        return getPageStartIndex(currentPage);
+    }
+
+    /**
+     * 获取当前页<b>所包含的</b>最后一项条目
+     *
+     * @return the int
+     */
+    public int getEndIndex() {
+        return currentPage * itemsPerPage;
+    }
+
+    /**
      * 获取某页起始条目
      *
      * @param page the page
