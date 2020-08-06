@@ -22,7 +22,7 @@ import java.util.*;
  * 常用工具 辅助类
  */
 public class Helper {
-    private static final String VERSION = "v0.2";
+    private static final String VERSION = "v0.3";
     /**
      * 是否使用控制字符清屏
      */
