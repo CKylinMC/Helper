@@ -820,7 +820,7 @@ public class Helper {
     }
 
     /**
-     * 检查字符串是否为数字
+     * 检查字符串是否不是数字
      * <a href="https://www.cnblogs.com/gaoyoubo/archive/2010/09/15/1965080.html">参考自 "Java实现isNaN - Ｍe疯子_(~ 的博客"</a>
      *
      * @param value the value
