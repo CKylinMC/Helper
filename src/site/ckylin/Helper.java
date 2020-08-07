@@ -21,7 +21,7 @@ import java.util.Date;
  * 常用工具 辅助类
  */
 public class Helper {
-    private static final String VERSION = "v0.3";
+    private static final String VERSION = "v0.4";
 
     /**
      * 等待
