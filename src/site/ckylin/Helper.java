@@ -860,5 +860,15 @@ public class Helper {
         if (value == null) return true;
         return value.trim().length() < 1;
     }
+
+    /**
+     * 修复Tomcat传参中文乱码
+     *
+     * @param str the str
+     * @return the string
+     */
+    public static String fixChinese(String str) {
+        return new String(str.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+    }
 }
 

@@ -288,7 +288,7 @@ public class DbHelper {
     }
 
     public static String like(String columnName, String value) {
-        return " " + columnName + " LIKE " + "'" + value + "'" + " ";
+        return " " + columnName + " LIKE " + "'" + value + "'";
     }
 
     /**
@@ -398,8 +398,10 @@ public class DbHelper {
     public static int getCount(ResultSet rs, boolean resetPointer) {
         try {
             int currentRow = rs.getRow();
-            rs.last();
-            int resultRow = rs.getRow();
+            int resultRow = 0;
+            while (rs.next()) resultRow++;
+            //rs.last();
+//            int resultRow = rs.getRow();
             if (resetPointer) {
                 rs.beforeFirst();
             } else {
