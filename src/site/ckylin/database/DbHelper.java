@@ -6,7 +6,8 @@
  */
 package site.ckylin.database;
 
-import site.ckylin.Helper;
+import site.ckylin.IO.PropUtils;
+import site.ckylin.variable.Converter;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
@@ -306,9 +307,9 @@ public class DbHelper {
      * @return 数据库代理类
      */
     public static Db connectFromProperties(String path) {
-        Properties properties = Helper.loadProperties(path);
+        Properties properties = PropUtils.loadProperties(path);
         if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
         lastDBConnection = db.getConnection();
         return db;
     }
@@ -329,9 +330,9 @@ public class DbHelper {
      * @return 数据库代理类
      */
     public static Db connectFromPropertiesInResource(String path, ClassLoader loader) {
-        Properties properties = Helper.loadPropertiesAsClassResource(path, loader);
+        Properties properties = PropUtils.loadPropertiesAsClassResource(path, loader);
 //        if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
         lastDBConnection = db.getConnection();
         return db;
     }
@@ -352,9 +353,9 @@ public class DbHelper {
      * @return 数据库代理类
      */
     public static Db connectFromPropertiesInResource(String path, Class<?> clazz) {
-        Properties properties = Helper.loadPropertiesAsClassResource(path, clazz);
+        Properties properties = PropUtils.loadPropertiesAsClassResource(path, clazz);
 //        if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Helper.str2int(properties.getProperty("port"), 3306));
+        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
         lastDBConnection = db.getConnection();
         return db;
     }

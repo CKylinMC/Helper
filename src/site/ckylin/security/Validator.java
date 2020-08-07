@@ -6,7 +6,7 @@
  */
 package site.ckylin.security;
 
-import site.ckylin.Helper;
+import site.ckylin.math.MathUtils;
 
 import java.util.regex.Pattern;
 
@@ -42,7 +42,7 @@ public class Validator {
      */
     public static int passwordRater(String pass) {
         if (pass.length() < 6) return -1;
-        if (Helper.isNaN(pass)) return -1;
+        if (MathUtils.isNaN(pass)) return -1;
         int rate = 0;
         if (pass.length() > 10) rate++;
         if (Pattern.matches("[0-9]", pass)) rate++;

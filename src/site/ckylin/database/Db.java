@@ -6,7 +6,7 @@
  */
 package site.ckylin.database;
 
-import site.ckylin.Helper;
+import site.ckylin.variable.ArrayUtils;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
@@ -265,7 +265,7 @@ public class Db {
      * @return 缓存的结果集
      */
     public CachedRowSet SELECT(ArrayList<String> columns, String tableName, String options) {
-        String cols = Helper.arrayJoin(columns, ",");
+        String cols = ArrayUtils.arrayJoin(columns, ",");
         return SELECT(cols, tableName, options);
     }
 
@@ -315,7 +315,7 @@ public class Db {
      * @return 受影响行数
      */
     public int INSERT(String tableName, ArrayList<String> columns, ArrayList<String> datas) {
-        return INSERT(tableName, Helper.arrayJoin(columns, ","), datas);
+        return INSERT(tableName, ArrayUtils.arrayJoin(columns, ","), datas);
     }
 
     /**
