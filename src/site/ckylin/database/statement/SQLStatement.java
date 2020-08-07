@@ -153,8 +153,8 @@ public class SQLStatement {
     /**
      * Limit sql statement.
      *
-     * @param from the from
-     * @param to   the to
+     * @param from  the from
+     * @param count the count
      * @return the sql statement
      */
     public SQLStatement limit(int from, int count) {
@@ -179,9 +179,394 @@ public class SQLStatement {
      * @param isDESC     the is desc
      * @return the sql statement
      */
-    public SQLStatement orderBy (String columnName, boolean isDESC) {
+    public SQLStatement orderBy(String columnName, boolean isDESC) {
         String desc = isDESC ? " desc" : "";
         builtStatement += " ORDER BY " + columnName + desc;
+        return this;
+    }
+
+    /**
+     * And sql statement.
+     *
+     * @return the sql statement
+     */
+    public SQLStatement and() {
+        builtStatement += " AND";
+        return this;
+    }
+
+    /**
+     * Or sql statement.
+     *
+     * @return the sql statement
+     */
+    public SQLStatement or() {
+        builtStatement += " OR";
+        return this;
+    }
+
+    /**
+     * Where sql statement.
+     *
+     * @return the sql statement
+     */
+    public SQLStatement where() {
+        builtStatement += " WHERE";
+        return this;
+    }
+
+    /**
+     * Not sql statement.
+     *
+     * @return the sql statement
+     */
+    public SQLStatement not() {
+        builtStatement += " NOT";
+        return this;
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, double value) {
+        return equals(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, float value) {
+        return equals(columnName, Float.toString(value), false);
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, long value) {
+        return equals(columnName, Long.toString(value), false);
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, int value) {
+        return equals(columnName, Integer.toString(value), false);
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, String value) {
+        return equals(columnName, value, true);
+    }
+
+    /**
+     * Equals sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @param quoted     the quoted
+     * @return the sql statement
+     */
+    public SQLStatement equals(String columnName, String value, boolean quoted) {
+        if (quoted) value = "'" + value + "'";
+        builtStatement += " `" + columnName + "`=" + value;
+        return this;
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, double value) {
+        return equalsOrLess(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, float value) {
+        return equalsOrLess(columnName, Float.toString(value), false);
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, long value) {
+        return equalsOrLess(columnName, Long.toString(value), false);
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, int value) {
+        return equalsOrLess(columnName, Integer.toString(value), false);
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, String value) {
+        return equalsOrLess(columnName, value, true);
+    }
+
+    /**
+     * Equals or less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @param quoted     the quoted
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLess(String columnName, String value, boolean quoted) {
+        if (quoted) value = "'" + value + "'";
+        builtStatement += " `" + columnName + "`<=" + value;
+        return this;
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, double value) {
+        return equalsOrLarge(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, float value) {
+        return equalsOrLarge(columnName, Float.toString(value), false);
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, long value) {
+        return equalsOrLarge(columnName, Long.toString(value), false);
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, int value) {
+        return equalsOrLarge(columnName, Integer.toString(value), false);
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, String value) {
+        return equalsOrLarge(columnName, value, true);
+    }
+
+    /**
+     * Equals or large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @param quoted     the quoted
+     * @return the sql statement
+     */
+    public SQLStatement equalsOrLarge(String columnName, String value, boolean quoted) {
+        if (quoted) value = "'" + value + "'";
+        builtStatement += " `" + columnName + "`>=" + value;
+        return this;
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, double value) {
+        return less(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, float value) {
+        return less(columnName, Float.toString(value), false);
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, long value) {
+        return less(columnName, Long.toString(value), false);
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, int value) {
+        return less(columnName, Integer.toString(value), false);
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, String value) {
+        return less(columnName, value, true);
+    }
+
+    /**
+     * Less sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @param quoted     the quoted
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName, String value, boolean quoted) {
+        if (quoted) value = "'" + value + "'";
+        builtStatement += " `" + columnName + "`<" + value;
+        return this;
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, double value) {
+        return large(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, float value) {
+        return large(columnName, Float.toString(value), false);
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, long value) {
+        return large(columnName, Long.toString(value), false);
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, int value) {
+        return large(columnName, Integer.toString(value), false);
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, String value) {
+        return large(columnName, value, true);
+    }
+
+    /**
+     * Large sql statement.
+     *
+     * @param columnName the column name
+     * @param value      the value
+     * @param quoted     the quoted
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName, String value, boolean quoted) {
+        if (quoted) value = "'" + value + "'";
+        builtStatement += " `" + columnName + "`>" + value;
         return this;
     }
 
@@ -190,7 +575,7 @@ public class SQLStatement {
      *
      * @return the string
      */
-    public String build () {
+    public String build() {
         return builtStatement;
     }
 

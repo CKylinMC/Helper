@@ -239,7 +239,7 @@ public class DbHelper {
      * @return 查询语句
      */
     public static String getCountCmd(String tableName) {
-        String baseCmd = "SELECT COUNT(*) FROM <TBNAME> ";
+        String baseCmd = "SELECT COUNT(1) FROM <TBNAME> ";
         String cmd = baseCmd.replace("<TBNAME>", tableName);
         return cmd;
     }
@@ -273,6 +273,22 @@ public class DbHelper {
      */
     public static String limit(int from, int count) {
         return " LIMIT " + from + "," + count;
+    }
+
+    /**
+     * CAST表达式，CAST(列名 as 目标值类型)
+     * 推荐使用SQLType内的目标值类型。
+     *
+     * @param columnName the column name
+     * @param type       the type
+     * @return the string
+     */
+    public static String cast(String columnName, String type) {
+        return " CAST(" + columnName + " as " + type + ") ";
+    }
+
+    public static String like(String columnName, String value) {
+        return " " + columnName + " LIKE " + "'" + value + "'" + " ";
     }
 
     /**
@@ -360,6 +376,39 @@ public class DbHelper {
      */
     public static Date toSQLDate(java.util.Date date) {
         return new Date(date.getTime());
+    }
+
+    /**
+     * 获得结果集中的结果数
+     *
+     * @param rs 结果集
+     * @return the int
+     */
+    public static int getCount(ResultSet rs) {
+        return getCount(rs, false);
+    }
+
+    /**
+     * 获得结果集中的结果数
+     *
+     * @param rs           结果集
+     * @param resetPointer 重置到初始位置，否则重置到传入时的位置
+     * @return the int
+     */
+    public static int getCount(ResultSet rs, boolean resetPointer) {
+        try {
+            int currentRow = rs.getRow();
+            rs.last();
+            int resultRow = rs.getRow();
+            if (resetPointer) {
+                rs.beforeFirst();
+            } else {
+                rs.absolute(currentRow);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
 

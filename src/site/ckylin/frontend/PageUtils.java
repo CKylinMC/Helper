@@ -78,6 +78,24 @@ public class PageUtils {
     }
 
     /**
+     * 返回当前页是否是首页
+     *
+     * @return the boolean
+     */
+    public boolean isFirstPage() {
+        return currentPage == 1;
+    }
+
+    /**
+     * 返回当前页是否是尾页
+     *
+     * @return the boolean
+     */
+    public boolean isLastPage() {
+        return currentPage == totalPages;
+    }
+
+    /**
      * 获取某页起始条目
      *
      * @param page the page

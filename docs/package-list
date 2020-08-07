@@ -2,6 +2,7 @@ site.ckylin
 site.ckylin.console
 site.ckylin.database
 site.ckylin.database.statement
+site.ckylin.database.type
 site.ckylin.frontend
 site.ckylin.methods
 site.ckylin.security
