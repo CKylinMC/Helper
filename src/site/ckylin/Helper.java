@@ -850,5 +850,15 @@ public class Helper {
         return flag;
     }
 
+    /**
+     * 判断字符串是否为空
+     *
+     * @param value the value
+     * @return the boolean
+     */
+    public static boolean isEmpty(String value) {
+        if (value == null) return true;
+        return value.trim().length() < 1;
+    }
 }
 
