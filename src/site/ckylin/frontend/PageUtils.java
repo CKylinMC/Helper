@@ -11,6 +11,7 @@ package site.ckylin.frontend;
  */
 public class PageUtils {
     private int currentPage = 1;
+    private int virtualCurrentPage = 1;
     private int totalPages;
     private int totalItems;
     private int itemsPerPage;
@@ -78,6 +79,24 @@ public class PageUtils {
     }
 
     /**
+     * 获取虚拟当前页起始条目
+     *
+     * @return the int
+     */
+    public int getVirtualStartIndex() {
+        return getPageStartIndex(virtualCurrentPage);
+    }
+
+    /**
+     * 获取虚拟当前页<b>所包含的</b>最后一项条目
+     *
+     * @return the int
+     */
+    public int getVirtualEndIndex() {
+        return virtualCurrentPage * itemsPerPage;
+    }
+
+    /**
      * 返回当前页是否是首页
      *
      * @return the boolean
@@ -113,6 +132,31 @@ public class PageUtils {
      */
     public int getPageEndIndex(int page) {
         return page * itemsPerPage;
+    }
+
+    /**
+     * 获取虚拟当前页
+     *
+     * @return the virtual current page
+     */
+    public int getVirtualCurrentPage() {
+        return virtualCurrentPage;
+    }
+
+    /**
+     * 设置虚拟当前页
+     *
+     * @param virtualCurrentPage the virtual current page
+     */
+    public void setVirtualCurrentPage(int virtualCurrentPage) {
+        this.virtualCurrentPage = virtualCurrentPage;
+    }
+
+    /**
+     * 使虚拟当前页生效
+     */
+    public void applyVirtualCurrentPage() {
+        setCurrentPage(virtualCurrentPage);
     }
 
     /**
