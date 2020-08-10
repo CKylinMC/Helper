@@ -4,7 +4,7 @@
  * @description:
  * @date: 2020-08-07 18:59
  */
-package site.ckylin.variable;
+package site.ckylin.varutils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

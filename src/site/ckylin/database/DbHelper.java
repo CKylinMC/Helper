@@ -7,7 +7,7 @@
 package site.ckylin.database;
 
 import site.ckylin.IO.PropUtils;
-import site.ckylin.variable.Converter;
+import site.ckylin.varutils.Converter;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;

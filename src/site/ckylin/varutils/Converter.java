@@ -4,7 +4,7 @@
  * @description:
  * @date: 2020-08-07 18:58
  */
-package site.ckylin.variable;
+package site.ckylin.varutils;
 
 import java.io.UnsupportedEncodingException;
 

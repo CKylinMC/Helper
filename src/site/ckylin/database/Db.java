@@ -6,7 +6,7 @@
  */
 package site.ckylin.database;
 
-import site.ckylin.variable.ArrayUtils;
+import site.ckylin.varutils.ArrayUtils;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
