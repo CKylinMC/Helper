@@ -232,8 +232,18 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, double value) {
-        return equals(columnName, Double.toString(value), false);
+    public SQLStatement equal(String columnName, double value) {
+        return equal(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals sql statement with placeholder '?'.
+     *
+     * @param columnName the column name
+     * @return the sql statement
+     */
+    public SQLStatement equal(String columnName) {
+        return equal(columnName, "?", false);
     }
 
     /**
@@ -243,8 +253,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, float value) {
-        return equals(columnName, Float.toString(value), false);
+    public SQLStatement equal(String columnName, float value) {
+        return equal(columnName, Float.toString(value), false);
     }
 
     /**
@@ -254,8 +264,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, long value) {
-        return equals(columnName, Long.toString(value), false);
+    public SQLStatement equal(String columnName, long value) {
+        return equal(columnName, Long.toString(value), false);
     }
 
     /**
@@ -265,8 +275,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, int value) {
-        return equals(columnName, Integer.toString(value), false);
+    public SQLStatement equal(String columnName, int value) {
+        return equal(columnName, Integer.toString(value), false);
     }
 
     /**
@@ -276,8 +286,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, String value) {
-        return equals(columnName, value, true);
+    public SQLStatement equal(String columnName, String value) {
+        return equal(columnName, value, true);
     }
 
     /**
@@ -288,7 +298,7 @@ public class SQLStatement {
      * @param quoted     the quoted
      * @return the sql statement
      */
-    public SQLStatement equals(String columnName, String value, boolean quoted) {
+    public SQLStatement equal(String columnName, String value, boolean quoted) {
         if (quoted) value = "'" + value + "'";
         builtStatement += " `" + columnName + "`=" + value;
         return this;
@@ -301,8 +311,18 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, double value) {
-        return equalsOrLess(columnName, Double.toString(value), false);
+    public SQLStatement equalOrLess(String columnName, double value) {
+        return equalOrLess(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals or less sql statement with placeholder '?'.
+     *
+     * @param columnName the column name
+     * @return the sql statement
+     */
+    public SQLStatement equalOrLess(String columnName) {
+        return equalOrLess(columnName, "?", false);
     }
 
     /**
@@ -312,8 +332,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, float value) {
-        return equalsOrLess(columnName, Float.toString(value), false);
+    public SQLStatement equalOrLess(String columnName, float value) {
+        return equalOrLess(columnName, Float.toString(value), false);
     }
 
     /**
@@ -323,8 +343,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, long value) {
-        return equalsOrLess(columnName, Long.toString(value), false);
+    public SQLStatement equalOrLess(String columnName, long value) {
+        return equalOrLess(columnName, Long.toString(value), false);
     }
 
     /**
@@ -334,8 +354,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, int value) {
-        return equalsOrLess(columnName, Integer.toString(value), false);
+    public SQLStatement equalOrLess(String columnName, int value) {
+        return equalOrLess(columnName, Integer.toString(value), false);
     }
 
     /**
@@ -345,8 +365,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, String value) {
-        return equalsOrLess(columnName, value, true);
+    public SQLStatement equalOrLess(String columnName, String value) {
+        return equalOrLess(columnName, value, true);
     }
 
     /**
@@ -357,7 +377,7 @@ public class SQLStatement {
      * @param quoted     the quoted
      * @return the sql statement
      */
-    public SQLStatement equalsOrLess(String columnName, String value, boolean quoted) {
+    public SQLStatement equalOrLess(String columnName, String value, boolean quoted) {
         if (quoted) value = "'" + value + "'";
         builtStatement += " `" + columnName + "`<=" + value;
         return this;
@@ -370,8 +390,18 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, double value) {
-        return equalsOrLarge(columnName, Double.toString(value), false);
+    public SQLStatement equalOrLarge(String columnName, double value) {
+        return equalOrLarge(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Equals or large sql statement with placeholder '?'.
+     *
+     * @param columnName the column name
+     * @return the sql statement
+     */
+    public SQLStatement equalOrLarge(String columnName) {
+        return equalOrLarge(columnName, "?", false);
     }
 
     /**
@@ -381,8 +411,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, float value) {
-        return equalsOrLarge(columnName, Float.toString(value), false);
+    public SQLStatement equalOrLarge(String columnName, float value) {
+        return equalOrLarge(columnName, Float.toString(value), false);
     }
 
     /**
@@ -392,8 +422,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, long value) {
-        return equalsOrLarge(columnName, Long.toString(value), false);
+    public SQLStatement equalOrLarge(String columnName, long value) {
+        return equalOrLarge(columnName, Long.toString(value), false);
     }
 
     /**
@@ -403,8 +433,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, int value) {
-        return equalsOrLarge(columnName, Integer.toString(value), false);
+    public SQLStatement equalOrLarge(String columnName, int value) {
+        return equalOrLarge(columnName, Integer.toString(value), false);
     }
 
     /**
@@ -414,8 +444,8 @@ public class SQLStatement {
      * @param value      the value
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, String value) {
-        return equalsOrLarge(columnName, value, true);
+    public SQLStatement equalOrLarge(String columnName, String value) {
+        return equalOrLarge(columnName, value, true);
     }
 
     /**
@@ -426,7 +456,7 @@ public class SQLStatement {
      * @param quoted     the quoted
      * @return the sql statement
      */
-    public SQLStatement equalsOrLarge(String columnName, String value, boolean quoted) {
+    public SQLStatement equalOrLarge(String columnName, String value, boolean quoted) {
         if (quoted) value = "'" + value + "'";
         builtStatement += " `" + columnName + "`>=" + value;
         return this;
@@ -441,6 +471,16 @@ public class SQLStatement {
      */
     public SQLStatement less(String columnName, double value) {
         return less(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Less sql statement with placeholder '?'.
+     *
+     * @param columnName the column name
+     * @return the sql statement
+     */
+    public SQLStatement less(String columnName) {
+        return less(columnName, "?", false);
     }
 
     /**
@@ -510,6 +550,16 @@ public class SQLStatement {
      */
     public SQLStatement large(String columnName, double value) {
         return large(columnName, Double.toString(value), false);
+    }
+
+    /**
+     * Large sql statement with placeholder '?'.
+     *
+     * @param columnName the column name
+     * @return the sql statement
+     */
+    public SQLStatement large(String columnName) {
+        return large(columnName, "?", false);
     }
 
     /**
