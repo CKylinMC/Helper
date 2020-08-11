@@ -6,6 +6,8 @@
  */
 package site.ckylin.console;
 
+import site.ckylin.methods.Methods;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -53,7 +55,7 @@ public class Console {
         Console.lastInstance = this;
     }
 
-    private ArrayList<String> logs;
+    private ArrayList<String> logs = new ArrayList<>();
     private String lastLine = "";
 
     private PrintStream out = System.out;
@@ -147,7 +149,7 @@ public class Console {
     private void addLog(String s, boolean newLine) {
         if (isLogging()) {
             if (newLine) {
-                if (!Objects.equals(lastLine, "")) {
+                if (lastLine != null && !Objects.equals(lastLine, "")) {
                     logs.add(lastLine);
                     lastLine = "";
                 }
@@ -224,12 +226,63 @@ public class Console {
 
     /**
      * Debug.
+     * Levels:
+     * <ul>
+     *     <li>0 - File name.</li>
+     *     <li>1 - File name and line numbers.</li>
+     *     <li>2 - Method name.</li>
+     *     <li>3 - Class name.</li>
+     *     <li>4 - Class name and method name.</li>
+     * </ul>
+     *
+     * @param level SenderInfoLevel
+     * @param args  the args
+     */
+    public void debug(Integer level, Object... args) {
+        String sender = "";
+        StackTraceElement caller = Methods.getCaller();
+        switch (level) {
+            default:
+            case 0:
+                sender = caller.getFileName();
+                break;
+            case 1:
+                sender = caller.getFileName() + caller.getLineNumber();
+                break;
+            case 2:
+                sender = caller.getMethodName();
+                break;
+            case 3:
+                sender = caller.getClassName();
+                break;
+            case 4:
+                sender = caller.getClassName() + "." + caller.getMethodName();
+                break;
+        }
+        debug(sender, args);
+    }
+
+    /**
+     * Debug.
      *
      * @param sender the sender
      * @param args   the args
      */
     public void debug(String sender, Object... args) {
         printDebugProxy("[" + sender + "] ");
+        for (Object arg : args) {
+            printDebugProxy(arg.toString());
+        }
+        printlnDebugProxy("");
+    }
+
+    /**
+     * Code Debug.
+     *
+     * @param args the args
+     */
+    public void codedebug(Object... args) {
+        printDebugProxy("[" + Thread.currentThread().getStackTrace()[2].getFileName() + ":" + Thread.currentThread().getStackTrace()[2].getLineNumber() + "] ");
         for (Object arg : args) {
             printDebugProxy(arg.toString());
         }
