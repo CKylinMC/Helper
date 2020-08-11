@@ -6,6 +6,9 @@
  */
 package site.ckylin.methods;
 
+/**
+ * The type Methods.
+ */
 public class Methods {
 
     //https://www.cnblogs.com/fangzhaolee/archive/2012/07/14/2591566.html
@@ -22,4 +25,31 @@ public class Methods {
             System.out.println(i+"--"+ste.getLineNumber());
         }
     }*/
+
+    /**
+     * Get caller stack trace element.
+     *
+     * @return the stack trace element
+     */
+    public static StackTraceElement getCaller() {
+        return Thread.currentThread().getStackTrace()[3];
+    }
+
+    /**
+     * Get self element info stack trace element.
+     *
+     * @return the stack trace element
+     */
+    public static StackTraceElement getSelfElementInfo() {
+        return Thread.currentThread().getStackTrace()[2];
+    }
+
+    /**
+     * Get full stack stack trace element [ ].
+     *
+     * @return the stack trace element [ ]
+     */
+    public static StackTraceElement[] getFullStack() {
+        return Thread.currentThread().getStackTrace();
+    }
 }
