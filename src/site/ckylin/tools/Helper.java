@@ -9,6 +9,7 @@ package site.ckylin.tools;
 
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+import site.ckylin.tools.varutils.Is;
 
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -106,17 +107,6 @@ public class Helper {
     }
 
     /**
-     * 判断字符串是否为空
-     *
-     * @param value the value
-     * @return the boolean
-     */
-    public static boolean isEmpty(String value) {
-        if (value == null) return true;
-        return value.trim().length() < 1;
-    }
-
-    /**
      * 修复Tomcat传参中文乱码
      *
      * @param str the str
@@ -124,6 +114,16 @@ public class Helper {
      */
     public static String fixChinese(String str) {
         return new String(str.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 判断字符串是否为空
+     *
+     * @param value the value
+     * @return the boolean
+     */
+    public static boolean isEmpty(String value) {
+        return Is.empty(value);
     }
 }
 

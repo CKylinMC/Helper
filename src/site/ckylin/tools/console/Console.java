@@ -205,6 +205,16 @@ public class Console {
     }
 
     /**
+     * Info.
+     *
+     * @param args the args
+     */
+    public void info(Object... args) {
+        printProxy("[INFO] ");
+        log(args);
+    }
+
+    /**
      * Error.
      *
      * @param args the args

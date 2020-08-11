@@ -8,6 +8,7 @@ package site.ckylin.tools.varutils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class ArrayUtils {
     /**
@@ -40,24 +41,35 @@ public class ArrayUtils {
     }
 
     /**
-     * 字符串快速转数组
+     * 快速转数组
      *
-     * @param str the str
+     * @param obj the str
      * @return the array list
      */
-    public static ArrayList<String> toArr(String... str) {
-        return new ArrayList<>(Arrays.asList(str));
+    public static <T> ArrayList<T> toArr(T... obj) {
+        return new ArrayList<>(Arrays.asList(obj));
+    }
+
+    /**
+     * 快速转数组
+     *
+     * @param obj the str
+     * @return the array list
+     */
+    public static <T> ArrayList<T> toArr(Collection<T> obj) {
+        return new ArrayList<>(obj);
     }
 
     /**
      * 数组转字符串
      *
-     * @param arr     the arr
+     * @param array   the array
      * @param joinStr the join str
      * @return the string
      */
-    public static String arrayJoin(ArrayList<String> arr, String joinStr) {
+    public static String arrayJoin(Collection<String> array, String joinStr) {
         StringBuilder result = new StringBuilder();
+        ArrayList<String> arr = toArr(array);
         if (arr.size() == 1) {
             return arr.get(0);
         }

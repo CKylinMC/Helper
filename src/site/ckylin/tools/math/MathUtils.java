@@ -6,6 +6,8 @@
  */
 package site.ckylin.tools.math;
 
+import site.ckylin.tools.varutils.Is;
+
 public class MathUtils {
     /**
      * 生成范围内随机数
@@ -85,26 +87,6 @@ public class MathUtils {
      * @return the boolean
      */
     public static boolean isNaN(String value) {
-        boolean flag = false;
-        if (value != null && !"".equals(value.trim())) {
-            //如果没有小数点
-            if (!value.contains(".")) {
-                if (!value.matches("\\d+")) {
-                    //不是数字
-                    flag = true;
-                }
-            } else if (value.indexOf(".") == 1) {
-                String[] s_arr = value.split("\\.");
-                String s1 = s_arr[0];
-                String s2 = s_arr[1];
-                if ((!s1.matches("\\d+")) || (!s2.matches("\\d+"))) {
-                    //不是数字
-                    flag = true;
-                }
-            }
-        } else {
-            flag = true;
-        }
-        return flag;
+        return Is.NaN(value);
     }
 }
