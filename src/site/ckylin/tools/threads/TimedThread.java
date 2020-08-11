@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.threads
+ * @Package: site.ckylin.tools.threads
  * @author: CKylinMC
  * @description:
  * @date: 2020-06-26 14:38
  */
-package site.ckylin.threads;
+package site.ckylin.tools.threads;
 
 /**
  * 计时线程类

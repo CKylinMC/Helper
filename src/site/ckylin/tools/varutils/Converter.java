@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.variable
+ * @Package: site.ckylin.tools.variable
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-07 18:58
  */
-package site.ckylin.varutils;
+package site.ckylin.tools.varutils;
 
 import java.io.UnsupportedEncodingException;
 

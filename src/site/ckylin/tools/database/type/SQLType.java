@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.database.type
+ * @Package: site.ckylin.tools.database.type
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-07 11:03
  */
-package site.ckylin.database.type;
+package site.ckylin.tools.database.type;
 
 /**
  * SQL 数据类型

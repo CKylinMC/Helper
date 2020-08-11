@@ -1,12 +1,12 @@
 /**
- * @Package: site.ckylin.security
+ * @Package: site.ckylin.tools.security
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-06 15:35
  */
-package site.ckylin.security;
+package site.ckylin.tools.security;
 
-import site.ckylin.math.MathUtils;
+import site.ckylin.tools.math.MathUtils;
 
 import java.util.regex.Pattern;
 

@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.security
+ * @Package: site.ckylin.tools.security
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-06 15:57
  */
-package site.ckylin.security;
+package site.ckylin.tools.security;
 
 import java.io.UnsupportedEncodingException;
 

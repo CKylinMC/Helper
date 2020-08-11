@@ -1,12 +1,12 @@
 /**
- * @Package: site.ckylin.database.statement
+ * @Package: site.ckylin.tools.database.statement
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-06 10:48
  */
-package site.ckylin.database.statement;
+package site.ckylin.tools.database.statement;
 
-import site.ckylin.database.DbHelper;
+import site.ckylin.tools.database.DbHelper;
 
 /**
  * The type Sql statement.

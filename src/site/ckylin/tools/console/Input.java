@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.console
+ * @Package: site.ckylin.tools.console
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-07 18:50
  */
-package site.ckylin.console;
+package site.ckylin.tools.console;
 
 import java.io.Console;
 import java.util.Scanner;

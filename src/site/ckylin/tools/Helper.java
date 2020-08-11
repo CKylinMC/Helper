@@ -1,11 +1,11 @@
 /**
- * @Package: site.ckylin
+ * @Package: site.ckylin.tools
  * @author: CKylinMC
  * @description: Helper辅助类
  * @date: 2020-06-29 9:58
  */
 
-package site.ckylin;
+package site.ckylin.tools;
 
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
@@ -21,7 +21,7 @@ import java.util.Date;
  * 常用工具 辅助类
  */
 public class Helper {
-    private static final String VERSION = "v0.4";
+    private static final String VERSION = "v0.5";
 
     /**
      * 等待

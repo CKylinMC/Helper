@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.methods
+ * @Package: site.ckylin.tools.methods
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-05 9:34
  */
-package site.ckylin.methods;
+package site.ckylin.tools.methods;
 
 /**
  * The type Methods.

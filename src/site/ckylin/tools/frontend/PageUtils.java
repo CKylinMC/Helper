@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.frontend
+ * @Package: site.ckylin.tools.frontend
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-06 11:47
  */
-package site.ckylin.frontend;
+package site.ckylin.tools.frontend;
 
 /**
  * 分页工具类

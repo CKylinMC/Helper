@@ -1,12 +1,12 @@
 /**
- * @Package: site.ckylin
+ * @Package: site.ckylin.tools
  * @author: CKylinMC
  * @description:
  * @date: 2020-07-07 9:31
  */
-package site.ckylin.database;
+package site.ckylin.tools.database;
 
-import site.ckylin.varutils.ArrayUtils;
+import site.ckylin.tools.varutils.ArrayUtils;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;

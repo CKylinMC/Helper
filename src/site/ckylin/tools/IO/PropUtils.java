@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.IO
+ * @Package: site.ckylin.tools.IO
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-07 18:55
  */
-package site.ckylin.IO;
+package site.ckylin.tools.IO;
 
 import java.io.*;
 import java.util.Properties;

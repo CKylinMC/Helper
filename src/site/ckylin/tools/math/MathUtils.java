@@ -1,10 +1,10 @@
 /**
- * @Package: site.ckylin.math
+ * @Package: site.ckylin.tools.math
  * @author: CKylinMC
  * @description:
  * @date: 2020-08-07 18:52
  */
-package site.ckylin.math;
+package site.ckylin.tools.math;
 
 public class MathUtils {
     /**
