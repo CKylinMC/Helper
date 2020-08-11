@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<project default="buildDocs">
+    <target name="buildDocs">
+        <echo message="创建文档"/>
+
+        <path id="classpath">
+            <fileset dir="${basedir}/src">
+                <include name="**/*.java"/>
+            </fileset>
+        </path>
+        <javadoc packagenames="src" sourcepath="${basedir}\\src" destdir="${basedir}\\docs" author="true" version="true"
+                 use="true" linksource="https://docs.oracle.com/javase/7/docs/api/" splitindex="true"
+                 windowtitle="Helper 工具类" doctitle="Helper 工具类"
+                 encoding="UTF-8" docencoding="UTF-8" charset="UTF-8">
+            <classpath refid="classpath"/>
+            <packageset dir="${basedir}\\src" defaultexcludes="yes">
+                <include name="**"/>
+            </packageset>
+        </javadoc>
+    </target>
+</project>
