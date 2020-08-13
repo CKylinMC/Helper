@@ -124,4 +124,24 @@ public class Converter {
             return str;
         }
     }
+
+    /**
+     * 把中文转成Unicode码
+     * <a href="https://blog.csdn.net/dxswzj/article/details/38416311">参考自: "java后台传数据到前台乱码问题 中文转成Unicode码"</a>
+     *
+     * @param str chineseChar
+     * @return result
+     */
+    public static String chineseToUnicode(String str) {
+        String result = "";
+        for (int i = 0; i < str.length(); i++) {
+            int chr1 = (char) str.charAt(i);
+            if ((chr1 >= 19968 && chr1 <= 171941) || chr1 == 12289) {//汉字范围 \u4e00-\u9fa5 (中文)  12289 是“、”
+                result += "\\u" + Integer.toHexString(chr1);
+            } else {
+                result += str.charAt(i);
+            }
+        }
+        return result;
+    }
 }

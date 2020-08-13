@@ -161,4 +161,43 @@ public class Any {
         }
         return false;
     }
+
+    /**
+     * Is null boolean.
+     *
+     * @param obj the obj
+     * @return the boolean
+     */
+    public static boolean isNull(Object... obj) {
+        for (Object o : obj) {
+            if (o == null) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Is true boolean.
+     *
+     * @param obj the obj
+     * @return the boolean
+     */
+    public static boolean isTrue(Boolean... obj) {
+        for (Boolean o : obj) {
+            if (o) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Is false boolean.
+     *
+     * @param obj the obj
+     * @return the boolean
+     */
+    public static boolean isFalse(Boolean... obj) {
+        for (Boolean o : obj) {
+            if (!o) return true;
+        }
+        return false;
+    }
 }
