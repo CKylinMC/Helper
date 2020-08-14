@@ -7,8 +7,7 @@
 
 package site.ckylin.tools;
 
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.codec.binary.Base64;
 import site.ckylin.tools.varutils.Is;
 
 import java.nio.charset.StandardCharsets;
@@ -44,7 +43,28 @@ public class Helper {
      */
     public static String base64_encode(String str) {
         if (str == null) return "";
-        return Base64.encode(str.getBytes(StandardCharsets.UTF_8));
+        return Base64.encodeBase64String(str.getBytes());
+    }
+
+    /**
+     * URL安全的Base64编码
+     *
+     * @param str 要编码的字符串
+     * @return 编码后的字符串
+     */
+    public static String base64_encode(String str, boolean urlSafe) {
+        if (!urlSafe) return base64_encode(str);
+        return Base64.encodeBase64URLSafeString(str.getBytes());
+    }
+
+    /**
+     * Base64编码
+     *
+     * @param bt 要编码的数据
+     * @return 编码后的数据
+     */
+    public static byte[] base64_encode(byte[] bt) {
+        return Base64.encodeBase64(bt);
     }
 
     /**
@@ -55,13 +75,7 @@ public class Helper {
      */
     public static String base64_decode(String encoded) {
         if (encoded == null) return "";
-        try {
-            return new String(Base64.decode(encoded), StandardCharsets.UTF_8);
-        } catch (Base64DecodingException e) {
-            //Utils.error("Base64 decoding: failed.");
-            e.printStackTrace();
-            return "";
-        }
+        return new String(Base64.decodeBase64(encoded));
     }
 
     public static void main(String[] args) {
