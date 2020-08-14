@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class Db {
     private Connection conn;
+    private DbSource source = null;
     private String lastSql;
     private int execCount = 0;
 
@@ -26,7 +27,7 @@ public class Db {
 
     public static Db getLastInstance() {
         if (Db.instance == null) {
-            Db.instance = new Db(DbHelper.getLastConnection());
+            Db.instance = new Db(DbHelper.getLastDBSource());
         }
         return instance;
     }
@@ -42,6 +43,18 @@ public class Db {
         Db.instance = this;
     }
 
+
+    /**
+     * 使用已有连接初始化代理类
+     *
+     * @param source the source
+     */
+    public Db(DbSource source) {
+        this.source = source;
+        this.conn = source.prepareConnection();
+        Db.instance = this;
+    }
+
     /**
      * 使用本地默认地址和端口号初始化新的数据库连接和代理类
      *
@@ -50,7 +63,9 @@ public class Db {
      * @param database the database
      */
     public Db(String username, String password, String database) {
-        this.conn = DbHelper.initConnection(username, password, database);
+        this.source = new DbSource(username, password);
+        this.source.setDbName(database);
+        this.conn = this.source.prepareConnection();
         Db.instance = this;
     }
 
@@ -63,7 +78,9 @@ public class Db {
      * @param hostname the hostname
      */
     public Db(String username, String password, String database, String hostname) {
-        this.conn = DbHelper.initConnection(username, password, database, hostname);
+        this.source = new DbSource(username, password, hostname);
+        this.source.setDbName(database);
+        this.conn = this.source.prepareConnection();
         Db.instance = this;
     }
 
@@ -77,7 +94,9 @@ public class Db {
      * @param port     the port
      */
     public Db(String username, String password, String database, String hostname, int port) {
-        this.conn = DbHelper.initConnection(username, password, database, hostname, port);
+        this.source = new DbSource(username, password, hostname, port);
+        this.conn = this.source.prepareConnection();
+        Db.instance = this;
     }
 
     /**
@@ -90,6 +109,44 @@ public class Db {
     }
 
     /**
+     * 获取数据库源
+     *
+     * @return the source
+     */
+    public DbSource getSource() {
+        return source;
+    }
+
+    public boolean reconnect() {
+        if (source != null) {
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException ignored) {
+            }
+            conn = source.prepareConnection();
+            return true;
+        } else return false;
+    }
+
+    public boolean ensureConnection() {
+        try {
+            if (isOk()) {
+                return true;
+            } else if (source != null) {
+                reconnect();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
      * 执行“修改”查询，返回受影响的行数
      *
      * @param SQL 查询语句
@@ -97,7 +154,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public int execUpdate(String SQL) throws SQLException {
-        if (!isOk()) return -1;
+        if (!ensureConnection()) return -1;
         lastSql = SQL;
         execCount++;
         int res;
@@ -115,7 +172,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public CachedRowSet execQuery(String SQL) throws SQLException {
-        if (!isOk()) return null;
+        if (!ensureConnection()) return null;
         lastSql = SQL;
         execCount++;
         ResultSet res;
@@ -135,7 +192,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public boolean exec(String SQL) throws SQLException {
-        if (!isOk()) return false;
+        if (!ensureConnection()) return false;
         lastSql = SQL;
         execCount++;
         boolean res;
@@ -153,6 +210,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public PreparedStatement getPreStatement(String sql) throws SQLException {
+        if (!ensureConnection()) return null;
         return conn.prepareStatement(sql);
     }
 
@@ -165,7 +223,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public int execUpdate(String SQL, Object... params) throws SQLException {
-        if (!isOk()) return -1;
+        if (!ensureConnection()) return -1;
         lastSql = SQL;
         execCount++;
         int res;
@@ -187,7 +245,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public CachedRowSet execQuery(String SQL, Object... params) throws SQLException {
-        if (!isOk()) return null;
+        if (!ensureConnection()) return null;
         lastSql = SQL;
         execCount++;
         ResultSet res;
@@ -211,7 +269,7 @@ public class Db {
      * @throws SQLException 数据库错误
      */
     public boolean exec(String SQL, Object... params) throws SQLException {
-        if (!isOk()) return false;
+        if (!ensureConnection()) return false;
         lastSql = SQL;
         execCount++;
         boolean res;

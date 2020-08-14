@@ -12,6 +12,8 @@ import site.ckylin.tools.varutils.Converter;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -23,6 +25,8 @@ public class DbHelper {
      * 记录最后一次的连接
      */
     private static Connection lastDBConnection = null;
+
+    private static DbSource lastDBSource = null;
 
     /**
      * 加载 MySQL 驱动
@@ -50,6 +54,18 @@ public class DbHelper {
      */
     public static String buildJDBCUrl(String driver, String host, int port, String databaseName) {
         return "jdbc:" + driver + "://" + host + ":" + port + "/" + databaseName + "?useUnicode=true&characterEncoding=UTF-8";
+    }
+
+    /**
+     * 构建 JDBC URL, 并使用 UTF-8 编码
+     *
+     * @param driver 驱动名(如: mysql)
+     * @param host   主机地址
+     * @param port   端口(MySQL数据库默认端口号为: 3306)
+     * @return 已构建的 JDBC URL
+     */
+    public static String buildJDBCUrl(String driver, String host, int port) {
+        return "jdbc:" + driver + "://" + host + ":" + port + "/?useUnicode=true&characterEncoding=UTF-8";
     }
 
     /**
@@ -91,6 +107,26 @@ public class DbHelper {
         loadDriver();
         try {
             lastDBConnection = DriverManager.getConnection(buildJDBCUrl("mysql", hostname, port, databaseName), username, password);
+            return lastDBConnection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 初始化一个数据库连接
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param hostname 主机地址
+     * @param port     端口号(MySQL默认端口号为: 3306)
+     * @return 数据库连接
+     */
+    public static Connection initConnection(String username, String password, String hostname, int port) {
+        loadDriver();
+        try {
+            lastDBConnection = DriverManager.getConnection(buildJDBCUrl("mysql", hostname, port), username, password);
             return lastDBConnection;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -309,7 +345,9 @@ public class DbHelper {
     public static Db connectFromProperties(String path) {
         Properties properties = PropUtils.loadProperties(path);
         if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource = new DbSource(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource.setDbName(properties.getProperty("dbname"));
+        Db db = new Db(lastDBSource);
         lastDBConnection = db.getConnection();
         return db;
     }
@@ -332,7 +370,9 @@ public class DbHelper {
     public static Db connectFromPropertiesInResource(String path, ClassLoader loader) {
         Properties properties = PropUtils.loadPropertiesAsClassResource(path, loader);
 //        if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource = new DbSource(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource.setDbName(properties.getProperty("dbname"));
+        Db db = new Db(lastDBSource);
         lastDBConnection = db.getConnection();
         return db;
     }
@@ -355,7 +395,9 @@ public class DbHelper {
     public static Db connectFromPropertiesInResource(String path, Class<?> clazz) {
         Properties properties = PropUtils.loadPropertiesAsClassResource(path, clazz);
 //        if (properties == null) return null;
-        Db db = new Db(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("dbname"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource = new DbSource(properties.getProperty("user"), properties.getProperty("pass"), properties.getProperty("host"), Converter.str2int(properties.getProperty("port"), 3306));
+        lastDBSource.setDbName(properties.getProperty("dbname"));
+        Db db = new Db(lastDBSource);
         lastDBConnection = db.getConnection();
         return db;
     }
@@ -367,6 +409,15 @@ public class DbHelper {
      */
     public static Connection getLastConnection() {
         return lastDBConnection;
+    }
+
+    /**
+     * 获取最后一次连接的数据源
+     *
+     * @return the db source
+     */
+    public static DbSource getLastDBSource() {
+        return lastDBSource;
     }
 
     /**
@@ -412,6 +463,44 @@ public class DbHelper {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    //jdbc:mysql://localhost:3306/asd
+    public static Map<String, String> simpleURIParser(String URI) {
+        Map<String, String> configMap = new HashMap<>();
+
+        String[] partsA = URI.split("[?]")[0].split("://");
+
+        String[] driverParts = partsA[0].split(":");
+        String driver = "";
+        if (driverParts.length == 2) {
+            driver = driverParts[1];
+        }
+
+        String dbName = "";
+        String hostname = "";
+        String port = "3306";
+
+        if (partsA.length == 2) {
+            String[] partsB = partsA[1].split("/");
+            if (partsB.length > 1) {
+                dbName = partsB[1];
+            }
+
+            String[] partsC = partsB[0].split(":");
+            hostname = partsC[0];
+
+            if (partsC.length > 1) {
+                port = partsC[1];
+            }
+        }
+
+        configMap.put("driver", driver);
+        configMap.put("dbName", dbName);
+        configMap.put("hostname", hostname);
+        configMap.put("port", port);
+
+        return configMap;
     }
 }
 
